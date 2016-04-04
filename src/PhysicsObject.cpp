@@ -24,11 +24,11 @@ void PhysicsObject::update(double dt)
         if (name != bodies->at(i).name)
         {
             float dx = position.x - bodies->at(i).position.x;
-            float dy = position.x - bodies->at(i).position.x;
+            float dy = position.y - bodies->at(i).position.y;
 
             double distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
-            double magnitude = G * (mass * bodies->at(i).mass) / (pow(distance, 2));
+            double magnitude = -G * (mass * bodies->at(i).mass) / (pow(distance, 2));
 
             Vector2f gravitation;
             gravitation.x = (magnitude * dx) / distance;
@@ -37,7 +37,7 @@ void PhysicsObject::update(double dt)
             forces.push_back(gravitation);
 
             //std::cout << "distance: " << distance << ", magnitude: " << magnitude << "\n";
-            std::cout << gravitation.x << " " << gravitation.y << "\n";
+            //std::cout << gravitation.x << " " << gravitation.y << "\n";
         }
     }
 
@@ -53,7 +53,7 @@ void PhysicsObject::update(double dt)
 
     //std::cout << "acceleration: " << acceleration.x << " m/s2, velocity: " << velocity.x << " m/s, position: " << position.x << " m\n";
     //std::cout << "acceleration: " << acceleration.y << " m/s2, velocity: " << velocity.y << " m/s, position: " << position.y << " m\n";
-    std::cout << "\n";
+    //std::cout << "\n";
 }
 
 void PhysicsObject::drawForces(RenderWindow* window)

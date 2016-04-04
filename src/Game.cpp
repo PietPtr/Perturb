@@ -23,21 +23,21 @@ void Game::initialize()
     MassiveBodyData moon1Data;
     moon1Data.mass = 2.9397663e22;
     moon1Data.position = Vector2f(-27e6, 0);
-    moon1Data.velocity = Vector2f(0, 0);
+    moon1Data.velocity = Vector2f(0, 3223);
     moon1Data.radius = 0.5e6;
     moon1Data.name = "LaytheTEMP";
 
     MassiveBodyData moon2Data;
     moon2Data.mass = 3.1088028e21;
     moon2Data.position = Vector2f(-43e6, 0);
-    moon2Data.velocity = Vector2f(0, 0);
+    moon2Data.velocity = Vector2f(0, 2558);
     moon2Data.radius = 0.3e6;
     moon2Data.name = "VallTEMP";
 
     MassiveBodyData moon3Data;
     moon3Data.mass = 4.2332635e22;
     moon3Data.position = Vector2f(-68e6, 0);
-    moon3Data.velocity = Vector2f(0, 0);
+    moon3Data.velocity = Vector2f(0, 2030);
     moon3Data.radius = 0.6e6;
     moon3Data.name = "TyloTEMP";
 
@@ -71,6 +71,14 @@ void Game::update()
                 timeSpeed*=2;
             }
         }
+        if (event.type == sf::Event::MouseWheelMoved)
+        {
+            if (event.mouseWheel.delta > 0)
+                zoom/=2;
+            if (event.mouseWheel.delta < 0)
+                zoom*=2;
+
+        }
     }
 
     sfmldt = clock.restart();
@@ -91,7 +99,7 @@ void Game::draw()
 
     view.setSize(Vector2f(windowWidth, windowHeight));
     view.setCenter(viewPos);
-    view.zoom(1.5e5);
+    view.zoom(zoom);
     window->setView(view);
 
     for (int i = 0; i < bodies.size(); i++)

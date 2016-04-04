@@ -24,6 +24,7 @@ class Game
         RenderWindow* window;
         View view;
         Vector2f viewPos { 0, 0 };
+        double zoom = 1.5e5;
 
         int windowWidth = 1280; // px
         int windowHeight = 720; // px
