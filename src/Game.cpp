@@ -18,6 +18,7 @@ void Game::initialize()
     gasData.position = Vector2f(0, 0);
     gasData.velocity = Vector2f(0, 0);
     gasData.radius = 6e6;
+    gasData.color = Color(50, 194, 62);
     gasData.name = "JoolTEMP";
 
     MassiveBodyData moon1Data;
@@ -25,6 +26,7 @@ void Game::initialize()
     moon1Data.position = Vector2f(-27e6, 0);
     moon1Data.velocity = Vector2f(0, 3223);
     moon1Data.radius = 0.5e6;
+    moon1Data.color = Color(255, 255, 255);
     moon1Data.name = "LaytheTEMP";
 
     MassiveBodyData moon2Data;
@@ -32,6 +34,7 @@ void Game::initialize()
     moon2Data.position = Vector2f(-43e6, 0);
     moon2Data.velocity = Vector2f(0, 2558);
     moon2Data.radius = 0.3e6;
+    moon2Data.color = Color(63, 221, 252);
     moon2Data.name = "VallTEMP";
 
     MassiveBodyData moon3Data;
@@ -39,6 +42,7 @@ void Game::initialize()
     moon3Data.position = Vector2f(-68e6, 0);
     moon3Data.velocity = Vector2f(0, 2030);
     moon3Data.radius = 0.6e6;
+    moon3Data.color = Color(171, 173, 109);
     moon3Data.name = "TyloTEMP";
 
     bodies.push_back(MassiveBody(gasData));
@@ -85,6 +89,16 @@ void Game::update()
     totalTime += sfmldt;
     dt = sfmldt.asSeconds() * timeSpeed;
     UT += dt;
+
+    float SPEED = 1e8;
+    if (Keyboard::isKeyPressed(Keyboard::W))
+        viewPos.y -= SPEED * sfmldt.asSeconds();
+    if (Keyboard::isKeyPressed(Keyboard::A))
+        viewPos.x -= SPEED * sfmldt.asSeconds();
+    if (Keyboard::isKeyPressed(Keyboard::S))
+        viewPos.y += SPEED * sfmldt.asSeconds();
+    if (Keyboard::isKeyPressed(Keyboard::D))
+        viewPos.x += SPEED * sfmldt.asSeconds();
 
     //std::cout << "UT: " << UT << ", dt: " << dt << ", timeSpeed: " << timeSpeed << ", real time: " << totalTime.asSeconds() << "\n";
     for (int i = 0; i < bodies.size(); i++)

@@ -33,6 +33,7 @@ struct MassiveBodyData
     Vector2f position;
     Vector2f velocity;
     std::string name;
+    Color color;
 };
 
 class MassiveBody : public PhysicsObject // Moons and the main gas giant.
@@ -44,6 +45,7 @@ class MassiveBody : public PhysicsObject // Moons and the main gas giant.
     protected:
     private:
         int radius;
+        Color color;
 };
 
 #endif // PHYSICSOBJECT_H
