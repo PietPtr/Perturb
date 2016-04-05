@@ -15,6 +15,9 @@ class PhysicsObject
         PhysicsObject();
         void update(double dt);
         void drawForces(RenderWindow* window);
+
+        Vector2f getPosition() { return position; }
+
         static std::vector<MassiveBody>* bodies;
     protected:
         Vector2f position; // m
@@ -40,7 +43,7 @@ class MassiveBody : public PhysicsObject // Moons and the main gas giant.
 {
     public:
         MassiveBody(MassiveBodyData data);
-        void draw(RenderWindow* window);
+        void draw(RenderWindow* window, double zoom);
         std::string getName() { return name; }
     protected:
     private:

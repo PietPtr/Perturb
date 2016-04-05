@@ -45,6 +45,46 @@ void Game::initialize()
     moon3Data.color = Color(171, 173, 109);
     moon3Data.name = "TyloTEMP";
 
+    /*MassiveBodyData gasData;
+    gasData.mass = 1.8986e27;
+    gasData.position = Vector2f(0, 0);
+    gasData.velocity = Vector2f(0, 0);
+    gasData.radius = 69e6;
+    gasData.color = Color(212, 184, 144);
+    gasData.name = "Jupiter";
+
+    MassiveBodyData moon1Data;
+    moon1Data.mass = 8.931938e22;
+    moon1Data.position = Vector2f(-420e6, 0);
+    moon1Data.velocity = Vector2f(0, 17334);
+    moon1Data.radius = 1.8e6;
+    moon1Data.color = Color(255, 255, 0);
+    moon1Data.name = "Io";
+
+    MassiveBodyData moon2Data;
+    moon2Data.mass = 4.799844e22;
+    moon2Data.position = Vector2f(-664e6, 0);
+    moon2Data.velocity = Vector2f(0, 13740);
+    moon2Data.radius = 1.5e6;
+    moon2Data.color = Color(255, 212, 184);
+    moon2Data.name = "Europa";
+
+    MassiveBodyData moon3Data;
+    moon3Data.mass = 4.2332635e22;
+    moon3Data.position = Vector2f(-1069e6, 0);
+    moon3Data.velocity = Vector2f(0, 10880);
+    moon3Data.radius = 2.6e6;
+    moon3Data.color = Color(107, 107, 107);
+    moon3Data.name = "Ganymede";
+
+    MassiveBodyData moon4Data;
+    moon4Data.mass = 4.2332635e22;
+    moon3Data.position = Vector2f(-1869e6, 0);
+    moon3Data.velocity = Vector2f(0, 10880);
+    moon3Data.radius = 2.4e6;
+    moon4Data.color = Color(122, 105, 100);
+    moon4Data.name = "Callisto";*/
+
     bodies.push_back(MassiveBody(gasData));
     bodies.push_back(MassiveBody(moon1Data));
     bodies.push_back(MassiveBody(moon2Data));
@@ -104,21 +144,25 @@ void Game::update()
     for (int i = 0; i < bodies.size(); i++)
         bodies[i].update(dt);
 
+    viewPos = bodies[0].getPosition();
+
     frame++;
 }
 
 void Game::draw()
 {
-    window->clear();
+    if (!Keyboard::isKeyPressed(Keyboard::C))
+        window->clear();
 
     view.setSize(Vector2f(windowWidth, windowHeight));
     view.setCenter(viewPos);
     view.zoom(zoom);
     window->setView(view);
+    std::cout << zoom << "\n";
 
     for (int i = 0; i < bodies.size(); i++)
     {
-        bodies.at(i).draw(window);
+        bodies.at(i).draw(window, zoom);
     }
 
     window->display();

@@ -1,4 +1,5 @@
 #include "MassiveBody.h"
+#include <iostream>
 
 using namespace sf;
 
@@ -12,15 +13,33 @@ MassiveBody::MassiveBody(MassiveBodyData data)
     color = data.color;
 }
 
-void MassiveBody::draw(RenderWindow* window)
+void MassiveBody::draw(RenderWindow* window, double zoom)
 {
-    CircleShape body;
-    body.setRadius(radius);
-    //body.setFillColor(Color(position.x / 68e6 * 255, 0, 0));
-    body.setPosition(position);
-    body.setOrigin(radius, radius);
-    body.setFillColor(color);
-    window->draw(body);
+    double drawSize = radius / zoom; // draw size in pixels
+
+    if ((int)drawSize <= 1)
+    {
+        CircleShape body;
+        body.setPosition(position);
+        if (Keyboard::isKeyPressed(Keyboard::V))
+            body.setRadius(zoom * 100);
+        else
+            body.setRadius(zoom);
+        body.setFillColor(color);
+        window->draw(body);
+
+    }
+    else
+    {
+        CircleShape body;
+        body.setRadius(radius);
+        //body.setFillColor(Color(position.x / 68e6 * 255, 0, 0));
+        body.setPosition(position);
+        body.setOrigin(radius, radius);
+        body.setFillColor(color);
+        window->draw(body);
+    }
+
 
     //drawForces(window);
 }
