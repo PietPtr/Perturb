@@ -23,24 +23,24 @@ void Game::initialize()
 
     MassiveBodyData moon1Data;
     moon1Data.mass = 2.9397663e22;
-    moon1Data.position = Vector2f(-27e6, 0);
-    moon1Data.velocity = Vector2f(0, 3223);
+    moon1Data.position = Vector2f(-30e6, 0);
+    moon1Data.velocity = Vector2f(0, 3082);
     moon1Data.radius = 0.5e6;
     moon1Data.color = Color(255, 255, 255);
     moon1Data.name = "LaytheTEMP";
 
     MassiveBodyData moon2Data;
     moon2Data.mass = 3.1088028e21;
-    moon2Data.position = Vector2f(-43e6, 0);
-    moon2Data.velocity = Vector2f(0, 2558);
+    moon2Data.position = Vector2f(-58e6, 0);
+    moon2Data.velocity = Vector2f(0, 2216);
     moon2Data.radius = 0.3e6;
     moon2Data.color = Color(63, 221, 252);
     moon2Data.name = "VallTEMP";
 
     MassiveBodyData moon3Data;
     moon3Data.mass = 4.2332635e22;
-    moon3Data.position = Vector2f(-68e6, 0);
-    moon3Data.velocity = Vector2f(0, 2030);
+    moon3Data.position = Vector2f(-103e6, 0);
+    moon3Data.velocity = Vector2f(0, 1663);
     moon3Data.radius = 0.6e6;
     moon3Data.color = Color(171, 173, 109);
     moon3Data.name = "TyloTEMP";

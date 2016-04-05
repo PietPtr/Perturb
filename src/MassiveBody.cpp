@@ -27,7 +27,6 @@ void MassiveBody::draw(RenderWindow* window, double zoom)
             body.setRadius(zoom);
         body.setFillColor(color);
         window->draw(body);
-
     }
     else
     {
@@ -39,6 +38,18 @@ void MassiveBody::draw(RenderWindow* window, double zoom)
         body.setFillColor(color);
         window->draw(body);
     }
+
+    float dx = position.x - bodies->at(0).position.x;
+    float dy = position.y - bodies->at(0).position.y;
+
+    double distance = sqrt(pow(dx, 2) + pow(dy, 2));
+
+    CircleShape SOI;
+    SOI.setRadius(distance * pow(mass / bodies->at(0).mass, 0.4));
+    SOI.setPosition(position);
+    SOI.setOrigin(SOI.getRadius(), SOI.getRadius());
+    SOI.setFillColor(Color(color.r, color.g, color.b, 20));
+    window->draw(SOI);
 
 
     //drawForces(window);
