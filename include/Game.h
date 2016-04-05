@@ -44,4 +44,5 @@ class Game
         std::vector<Texture> textures;
 
         std::vector<MassiveBody> bodies;
+        std::vector<Spacecraft> spacecraft;
 };

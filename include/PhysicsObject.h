@@ -22,8 +22,9 @@ class PhysicsObject
     protected:
         Vector2f position; // m
         Vector2f velocity; // m / s
-        float thrust;      // N
+        float thrust = 0;  // N
         double mass;       // kg
+        double rotation = 0;
         std::vector<Vector2f> forces;
         std::string name;
     private:
@@ -49,6 +50,26 @@ class MassiveBody : public PhysicsObject // Moons and the main gas giant.
     private:
         int radius;
         Color color;
+};
+
+struct SpacecraftData
+{
+    double maxThrust;
+    Vector2f position;
+    Vector2f velocity;
+    double mass;
+};
+
+class Spacecraft : public PhysicsObject
+{
+    public:
+        Spacecraft(SpacecraftData data);
+        void draw(RenderWindow* window, double zoom);
+    protected:
+    private:
+        double maxThrust = 0;
+
+
 };
 
 #endif // PHYSICSOBJECT_H

@@ -29,11 +29,11 @@
 	<SFML/Graphics.hpp>
 	"Game.h"
 
-1459838731 source:/home/pieter/Coding/C++/Perturb/src/Game.cpp
+1459841595 source:/home/pieter/Coding/C++/Perturb/src/Game.cpp
 	<SFML/Graphics.hpp>
 	"Game.h"
 
-1459799744 /home/pieter/Coding/C++/Perturb/include/Game.h
+1459840137 /home/pieter/Coding/C++/Perturb/include/Game.h
 	<SFML/Graphics.hpp>
 	<iostream>
 	"Audio.h"
@@ -47,18 +47,24 @@
 	"Game.h"
 	<iostream>
 
-1459838704 source:/home/pieter/Coding/C++/Perturb/src/MassiveBody.cpp
-	"MassiveBody.h"
+1459841274 source:/home/pieter/Coding/C++/Perturb/src/MassiveBody.cpp
+	"PhysicsObject.h"
 	<iostream>
+	<SFML/Graphics.hpp>
 
 1459710255 /home/pieter/Coding/C++/Perturb/include/MassiveBody.h
 	"PhysicsObject.h"
 
-1459803837 /home/pieter/Coding/C++/Perturb/include/PhysicsObject.h
+1459840430 /home/pieter/Coding/C++/Perturb/include/PhysicsObject.h
 	<SFML/Graphics.hpp>
 	<vector>
 
-1459836281 source:/home/pieter/Coding/C++/Perturb/src/PhysicsObject.cpp
+1459841405 source:/home/pieter/Coding/C++/Perturb/src/PhysicsObject.cpp
 	"PhysicsObject.h"
 	<iostream>
+
+1459841448 source:/home/pieter/Coding/C++/Perturb/src/Spacecraft.cpp
+	"PhysicsObject.h"
+	<iostream>
+	<SFML/Graphics.hpp>
 

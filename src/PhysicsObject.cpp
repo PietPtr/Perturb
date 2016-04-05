@@ -41,6 +41,14 @@ void PhysicsObject::update(double dt)
         }
     }
 
+    if (thrust != 0)
+    {
+        Vector2f thrustForce;
+        thrustForce.x = cos(rotation) * thrust;
+        thrustForce.y = sin(rotation) * thrust;
+        forces.push_back(thrustForce);
+    }
+
     Vector2f sumForce = Vector2f(0, 0);
     for (int i = 0; i < forces.size(); i++)
         sumForce += forces[i];
@@ -70,7 +78,9 @@ void PhysicsObject::drawForces(RenderWindow* window)
         force[0].color = Color::Red;
         force[1].color = Color::Red;
         window->draw(force, 2, Lines);
+        //std::cout << forces.at(i).x << ", " << forces.at(i).y << "\n";
     }
+    //std::cout << "drawing " << forces.size() << " forces..\n";
 }
 
 

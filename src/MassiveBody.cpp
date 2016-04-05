@@ -1,5 +1,6 @@
-#include "MassiveBody.h"
+#include "PhysicsObject.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 using namespace sf;
 
@@ -48,7 +49,9 @@ void MassiveBody::draw(RenderWindow* window, double zoom)
     SOI.setRadius(distance * pow(mass / bodies->at(0).mass, 0.4));
     SOI.setPosition(position);
     SOI.setOrigin(SOI.getRadius(), SOI.getRadius());
-    SOI.setFillColor(Color(color.r, color.g, color.b, 20));
+    SOI.setOutlineColor(Color(color.r, color.g, color.b, 20));
+    SOI.setOutlineThickness(zoom);
+    SOI.setFillColor(Color(0, 0, 0, 0));
     window->draw(SOI);
 
 

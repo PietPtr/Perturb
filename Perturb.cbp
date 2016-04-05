@@ -50,6 +50,7 @@
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/MassiveBody.cpp" />
 		<Unit filename="src/PhysicsObject.cpp" />
+		<Unit filename="src/Spacecraft.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />

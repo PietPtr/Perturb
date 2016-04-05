@@ -91,6 +91,15 @@ void Game::initialize()
     bodies.push_back(MassiveBody(moon3Data));
 
     PhysicsObject::bodies = &bodies;
+
+    // SPACECRAFT initialization happens at the start of every level
+    // not at the start of every game instance.
+    SpacecraftData playerData;
+    playerData.maxThrust = 100e3;
+    playerData.mass = 20e3;
+    playerData.position = Vector2f(-103.65e6, 0);
+    playerData.velocity = Vector2f(0, 3763);
+    spacecraft.push_back(Spacecraft(playerData));
 }
 
 void Game::update()
@@ -143,8 +152,10 @@ void Game::update()
     //std::cout << "UT: " << UT << ", dt: " << dt << ", timeSpeed: " << timeSpeed << ", real time: " << totalTime.asSeconds() << "\n";
     for (int i = 0; i < bodies.size(); i++)
         bodies[i].update(dt);
+    for (int i = 0; i < spacecraft.size(); i++)
+        spacecraft[i].update(dt);
 
-    viewPos = bodies[0].getPosition();
+    viewPos = bodies[3].getPosition();
 
     frame++;
 }
@@ -158,11 +169,14 @@ void Game::draw()
     view.setCenter(viewPos);
     view.zoom(zoom);
     window->setView(view);
-    std::cout << zoom << "\n";
 
     for (int i = 0; i < bodies.size(); i++)
     {
         bodies.at(i).draw(window, zoom);
+    }
+    for (int i = 0; i < spacecraft.size(); i++)
+    {
+        spacecraft.at(i).draw(window, zoom);
     }
 
     window->display();
