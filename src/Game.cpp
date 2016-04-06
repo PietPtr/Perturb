@@ -13,38 +13,6 @@ void Game::initialize()
     loadAudio(audioFileNames);
     loadTextures(textureFileNames);
 
-    MassiveBodyData gasData;
-    gasData.mass = 4.2332635e24;
-    gasData.position = Vector2f(0, 0);
-    gasData.velocity = Vector2f(0, 0);
-    gasData.radius = 6e6;
-    gasData.color = Color(50, 194, 62);
-    gasData.name = "JoolTEMP";
-
-    MassiveBodyData moon1Data;
-    moon1Data.mass = 3.1088028e21;
-    moon1Data.position = Vector2f(-30e6, 0);
-    moon1Data.velocity = Vector2f(0, 3082);
-    moon1Data.radius = 0.3e6;
-    moon1Data.color = Color(63, 221, 252);
-    moon1Data.name = "VallTEMP";
-
-    MassiveBodyData moon2Data;
-    moon2Data.mass = 2.9397663e22;
-    moon2Data.position = Vector2f(-58e6, 0);
-    moon2Data.velocity = Vector2f(0, 2216);
-    moon2Data.radius = 0.5e6;
-    moon2Data.color = Color(255, 255, 255);
-    moon2Data.name = "LaytheTEMP";
-
-    MassiveBodyData moon3Data;
-    moon3Data.mass = 4.2332635e22;
-    moon3Data.position = Vector2f(-103e6, 0);
-    moon3Data.velocity = Vector2f(0, 1663);
-    moon3Data.radius = 0.6e6;
-    moon3Data.color = Color(171, 173, 109);
-    moon3Data.name = "TyloTEMP";
-
     /*MassiveBodyData gasData;
     gasData.mass = 1.8986e27;
     gasData.position = Vector2f(0, 0);
@@ -85,10 +53,51 @@ void Game::initialize()
     moon4Data.color = Color(122, 105, 100);
     moon4Data.name = "Callisto";*/
 
+    MassiveBodyData gasData;
+    gasData.mass = 4.2332635e24;
+    gasData.position = Vector2f(0, 0);
+    gasData.velocity = Vector2f(0, 0);
+    gasData.radius = 6e6;
+    gasData.color = Color(50, 194, 62);
+    gasData.name = "Caesar";
+
+    MassiveBodyData moon1Data;
+    moon1Data.mass = 3.1088028e21;
+    moon1Data.position = Vector2f(-30e6, 0);
+    moon1Data.velocity = Vector2f(0, 3082);
+    moon1Data.radius = 0.3e6;
+    moon1Data.color = Color(63, 221, 252);
+    moon1Data.name = "Tessarius";
+
+    MassiveBodyData moon2Data;
+    moon2Data.mass = 2.9397663e22;
+    moon2Data.position = Vector2f(-58e6, 0);
+    moon2Data.velocity = Vector2f(0, 2216);
+    moon2Data.radius = 0.5e6;
+    moon2Data.color = Color(255, 255, 255);
+    moon2Data.name = "Decurion";
+
+    MassiveBodyData moon3Data;
+    moon3Data.mass = 4.2332635e22;
+    moon3Data.position = Vector2f(-103e6, 0);
+    moon3Data.velocity = Vector2f(0, 1663);
+    moon3Data.radius = 0.6e6;
+    moon3Data.color = Color(171, 173, 109);
+    moon3Data.name = "Centurion";
+
+    MassiveBodyData moon4Data;
+    moon4Data.mass = 8.1337e19;
+    moon4Data.radius = 75014;
+    moon4Data.position = Vector2f(-140e6, 0);
+    moon4Data.velocity = Vector2f(-200, 1520);
+    moon4Data.color = Color(128, 128, 0);
+    moon4Data.name = "Numerus";
+
     bodies.push_back(MassiveBody(gasData));
     bodies.push_back(MassiveBody(moon1Data));
     bodies.push_back(MassiveBody(moon2Data));
     bodies.push_back(MassiveBody(moon3Data));
+    bodies.push_back(MassiveBody(moon4Data));
 
     PhysicsObject::bodies = &bodies;
 
@@ -171,7 +180,7 @@ void Game::update()
 
 void Game::draw()
 {
-    if (!Keyboard::isKeyPressed(Keyboard::C))
+    if (Keyboard::isKeyPressed(Keyboard::C))
         window->clear();
 
     view.setSize(Vector2f(windowWidth, windowHeight));

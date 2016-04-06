@@ -71,9 +71,9 @@ class Spacecraft : public PhysicsObject
     private:
         double throttle = 0;
         double maxThrust = 0;
-        double wetMass;             // kg
-        double fuel;                // kg
-        double specificImpulse;     // s
+        double wetMass = 0;         // kg
+        double fuel = 0;            // kg
+        double specificImpulse = 0; // s
 
 
 };

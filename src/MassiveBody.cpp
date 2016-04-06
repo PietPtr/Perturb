@@ -52,7 +52,10 @@ void MassiveBody::draw(RenderWindow* window, double zoom)
     SOI.setOutlineColor(Color(color.r, color.g, color.b, 20));
     SOI.setOutlineThickness(zoom);
     SOI.setFillColor(Color(0, 0, 0, 0));
-    //window->draw(SOI);
+    if (Keyboard::isKeyPressed(Keyboard::S))
+        window->draw(SOI);
+
+    std::cout << SOI.getRadius() << "\n";
 
 
     //drawForces(window);
