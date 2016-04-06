@@ -32,7 +32,7 @@ class PhysicsObject
 
 struct MassiveBodyData
 {
-    double  mass;
+    double mass;
     int radius;
     Vector2f position;
     Vector2f velocity;
@@ -57,17 +57,23 @@ struct SpacecraftData
     double maxThrust;
     Vector2f position;
     Vector2f velocity;
-    double mass;
+    double mass = 20e3; // dry mass
+    double fuel = 20e3;
 };
 
 class Spacecraft : public PhysicsObject
 {
     public:
         Spacecraft(SpacecraftData data);
+        void updateCraft(double dt);
         void draw(RenderWindow* window, double zoom);
     protected:
     private:
+        double throttle = 0;
         double maxThrust = 0;
+        double wetMass;             // kg
+        double fuel;                // kg
+        double specificImpulse;     // s
 
 
 };

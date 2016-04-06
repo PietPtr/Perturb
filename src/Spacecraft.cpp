@@ -21,3 +21,24 @@ void Spacecraft::draw(RenderWindow* window, double zoom)
 
     //drawForces(window);
 }
+
+void Spacecraft::updateCraft(double dt)
+{
+
+    const float THROTTLESPEED = 120; // %/s
+    if (Keyboard::isKeyPressed(Keyboard::Z))
+        throttle = 100;
+    if (Keyboard::isKeyPressed(Keyboard::X))
+        throttle = 0;
+    if (Keyboard::isKeyPressed(Keyboard::LShift))
+        throttle += THROTTLESPEED * dt;
+    if (Keyboard::isKeyPressed(Keyboard::LControl))
+        throttle -= THROTTLESPEED * dt;
+
+    throttle = throttle > 100 ? 100 : throttle;
+    throttle = throttle < 0   ? 0   : throttle;
+
+    thrust = (throttle / 100.0) * maxThrust;
+
+    update(dt);
+}

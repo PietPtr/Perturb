@@ -25,6 +25,7 @@ class Game
         View view;
         Vector2f viewPos { 0, 0 };
         double zoom = 1.5e5;
+        int focusedBody = -1;
 
         int windowWidth = 1280; // px
         int windowHeight = 720; // px
@@ -33,7 +34,7 @@ class Game
         Time totalTime;
         Clock clock;
         int frame = 0;
-        double timeSpeed = 1;
+        double timeSpeed = 8192;
         double UT = 0;        // s
         double dt = 0;        // s
 

@@ -22,20 +22,20 @@ void Game::initialize()
     gasData.name = "JoolTEMP";
 
     MassiveBodyData moon1Data;
-    moon1Data.mass = 2.9397663e22;
+    moon1Data.mass = 3.1088028e21;
     moon1Data.position = Vector2f(-30e6, 0);
     moon1Data.velocity = Vector2f(0, 3082);
-    moon1Data.radius = 0.5e6;
-    moon1Data.color = Color(255, 255, 255);
-    moon1Data.name = "LaytheTEMP";
+    moon1Data.radius = 0.3e6;
+    moon1Data.color = Color(63, 221, 252);
+    moon1Data.name = "VallTEMP";
 
     MassiveBodyData moon2Data;
-    moon2Data.mass = 3.1088028e21;
+    moon2Data.mass = 2.9397663e22;
     moon2Data.position = Vector2f(-58e6, 0);
     moon2Data.velocity = Vector2f(0, 2216);
-    moon2Data.radius = 0.3e6;
-    moon2Data.color = Color(63, 221, 252);
-    moon2Data.name = "VallTEMP";
+    moon2Data.radius = 0.5e6;
+    moon2Data.color = Color(255, 255, 255);
+    moon2Data.name = "LaytheTEMP";
 
     MassiveBodyData moon3Data;
     moon3Data.mass = 4.2332635e22;
@@ -95,10 +95,10 @@ void Game::initialize()
     // SPACECRAFT initialization happens at the start of every level
     // not at the start of every game instance.
     SpacecraftData playerData;
-    playerData.maxThrust = 100e3;
+    playerData.maxThrust = 1e3;
     playerData.mass = 20e3;
-    playerData.position = Vector2f(-103.65e6, 0);
-    playerData.velocity = Vector2f(0, 3763);
+    playerData.position = Vector2f(-51.5e6, -89.2e6);
+    playerData.velocity = Vector2f(-1440, 832);
     spacecraft.push_back(Spacecraft(playerData));
 }
 
@@ -118,11 +118,17 @@ void Game::update()
             if (event.key.code == Keyboard::Comma)
             {
                 timeSpeed/=2;
+                std::cout << timeSpeed << "\n";
             }
             if (event.key.code == Keyboard::Period)
             {
                 timeSpeed*=2;
+                std::cout << timeSpeed << "\n";
             }
+            if (event.key.code == Keyboard::Right)
+                focusedBody++;
+            if (event.key.code == Keyboard::Left)
+                focusedBody--;
         }
         if (event.type == sf::Event::MouseWheelMoved)
         {
@@ -130,7 +136,6 @@ void Game::update()
                 zoom/=2;
             if (event.mouseWheel.delta < 0)
                 zoom*=2;
-
         }
     }
 
@@ -153,9 +158,13 @@ void Game::update()
     for (int i = 0; i < bodies.size(); i++)
         bodies[i].update(dt);
     for (int i = 0; i < spacecraft.size(); i++)
-        spacecraft[i].update(dt);
+        spacecraft[i].updateCraft(dt);
 
-    viewPos = bodies[3].getPosition();
+    focusedBody = focusedBody > bodies.size() - 1 ? -1 : focusedBody;
+    focusedBody = focusedBody < -1 ? bodies.size() - 1 : focusedBody;
+
+    if (focusedBody != -1)
+        viewPos = bodies[focusedBody].getPosition();
 
     frame++;
 }
