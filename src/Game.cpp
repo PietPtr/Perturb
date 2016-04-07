@@ -88,7 +88,7 @@ void Game::initialize()
     MassiveBodyData moon4Data;
     moon4Data.mass = 8.1337e19;
     moon4Data.radius = 75014;
-    moon4Data.position = Vector2f(-140e6, 30e6);
+    moon4Data.position = Vector2f(140e6, -30e6);
     moon4Data.velocity = Vector2f(0, 1520);
     moon4Data.color = Color(100, 100, 10);
     moon4Data.name = "Numerus";
@@ -104,11 +104,12 @@ void Game::initialize()
     // SPACECRAFT initialization happens at the start of every level
     // not at the start of every game instance.
     SpacecraftData playerData;
-    playerData.maxThrust = 1e3;
+    playerData.maxThrust = 10e3;
     playerData.mass = 20e3;
-    playerData.position = Vector2f(-140e6 + 100e3, 30e6);
-    playerData.velocity = Vector2f(0, 1770);
-    //spacecraft.push_back(Spacecraft(playerData));
+    playerData.position = Vector2f(-103e6 + 0.67e6, 0);
+    playerData.velocity = Vector2f(0, 3600);
+    playerData.playerControlled = true;
+    spacecraft.push_back(Spacecraft(playerData));
 }
 
 void Game::update()
@@ -146,6 +147,10 @@ void Game::update()
             if (event.mouseWheel.delta < 0)
                 zoom*=2;
         }
+        if (event.type == sf::Event::LostFocus)
+            focus == false;
+        if (event.type == sf::Event::GainedFocus)
+            focus = true;
     }
 
     sfmldt = clock.restart();
@@ -164,16 +169,22 @@ void Game::update()
         viewPos.x += SPEED * sfmldt.asSeconds();
 
     //std::cout << "UT: " << UT << ", dt: " << dt << ", timeSpeed: " << timeSpeed << ", real time: " << totalTime.asSeconds() << "\n";
-    for (int i = 0; i < bodies.size(); i++)
-        bodies[i].update(dt, timeSpeed);
-    for (int i = 0; i < spacecraft.size(); i++)
-        spacecraft[i].updateCraft(dt, timeSpeed);
+
+    for (int i = 0; i < timeSpeed; i++)
+    {
+        for (int b = 0; b < bodies.size(); b++)
+            bodies[b].update(dt, timeSpeed);
+        for (int s = 0; s < spacecraft.size(); s++)
+            spacecraft[s].updateCraft(dt, timeSpeed);
+    }
 
     focusedBody = focusedBody > bodies.size() - 1 ? -1 : focusedBody;
     focusedBody = focusedBody < -1 ? bodies.size() - 1 : focusedBody;
 
     if (focusedBody != -1)
         viewPos = bodies[focusedBody].getPosition();
+
+    std::cout << "FPS: " << 1.0 / sfmldt.asSeconds() << ", timeSpeed: " << timeSpeed << "\n";
 
     frame++;
 }

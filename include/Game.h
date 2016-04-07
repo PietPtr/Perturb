@@ -25,7 +25,8 @@ class Game
         View view;
         Vector2f viewPos { 0, 0 };
         double zoom = 3e5;
-        int focusedBody = 0;
+        int focusedBody = 3;
+        bool focus = true;
 
         int windowWidth = 1280; // px
         int windowHeight = 720; // px

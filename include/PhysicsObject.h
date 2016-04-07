@@ -63,6 +63,7 @@ struct SpacecraftData
     Vector2f velocity;
     double mass = 20e3; // dry mass
     double fuel = 20e3;
+    bool playerControlled = false;
 };
 
 class Spacecraft : public PhysicsObject
@@ -78,6 +79,7 @@ class Spacecraft : public PhysicsObject
         double wetMass = 0;         // kg
         double fuel = 0;            // kg
         double specificImpulse = 0; // s
+        bool playerControlled = false;
 
 
 };

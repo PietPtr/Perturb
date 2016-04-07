@@ -10,6 +10,7 @@ Spacecraft::Spacecraft(SpacecraftData data)
     position = data.position;
     velocity = data.velocity;
     mass = data.mass;
+    playerControlled = data.playerControlled;
 }
 
 void Spacecraft::draw(RenderWindow* window, double zoom)
@@ -24,7 +25,6 @@ void Spacecraft::draw(RenderWindow* window, double zoom)
 
 void Spacecraft::updateCraft(double dt, double timeSpeed)
 {
-
     const float THROTTLESPEED = 120; // %/s
     if (Keyboard::isKeyPressed(Keyboard::Z))
         throttle = 100;
@@ -39,6 +39,8 @@ void Spacecraft::updateCraft(double dt, double timeSpeed)
     throttle = throttle < 0   ? 0   : throttle;
 
     thrust = (throttle / 100.0) * maxThrust;
+
+    //std::cout << throttle << "\n";
 
     update(dt, timeSpeed);
 }
