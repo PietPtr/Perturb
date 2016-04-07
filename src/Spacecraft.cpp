@@ -22,7 +22,7 @@ void Spacecraft::draw(RenderWindow* window, double zoom)
     //drawForces(window);
 }
 
-void Spacecraft::updateCraft(double dt)
+void Spacecraft::updateCraft(double dt, double timeSpeed)
 {
 
     const float THROTTLESPEED = 120; // %/s
@@ -40,5 +40,5 @@ void Spacecraft::updateCraft(double dt)
 
     thrust = (throttle / 100.0) * maxThrust;
 
-    update(dt);
+    update(dt, timeSpeed);
 }

@@ -55,7 +55,7 @@ void MassiveBody::draw(RenderWindow* window, double zoom)
     if (Keyboard::isKeyPressed(Keyboard::S))
         window->draw(SOI);
 
-    std::cout << SOI.getRadius() << "\n";
+    //sstd::cout << SOI.getRadius() << "\n";
 
 
     //drawForces(window);

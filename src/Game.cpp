@@ -58,7 +58,7 @@ void Game::initialize()
     gasData.position = Vector2f(0, 0);
     gasData.velocity = Vector2f(0, 0);
     gasData.radius = 6e6;
-    gasData.color = Color(50, 194, 62);
+    gasData.color = Color(255, 141, 79);
     gasData.name = "Caesar";
 
     MassiveBodyData moon1Data;
@@ -66,31 +66,31 @@ void Game::initialize()
     moon1Data.position = Vector2f(-30e6, 0);
     moon1Data.velocity = Vector2f(0, 3082);
     moon1Data.radius = 0.3e6;
-    moon1Data.color = Color(63, 221, 252);
+    moon1Data.color = Color(134, 217, 202);
     moon1Data.name = "Tessarius";
 
     MassiveBodyData moon2Data;
-    moon2Data.mass = 2.9397663e22;
+    moon2Data.mass = 2.5158e22;
     moon2Data.position = Vector2f(-58e6, 0);
     moon2Data.velocity = Vector2f(0, 2216);
-    moon2Data.radius = 0.5e6;
+    moon2Data.radius = 0.42e6;
     moon2Data.color = Color(255, 255, 255);
     moon2Data.name = "Decurion";
 
     MassiveBodyData moon3Data;
-    moon3Data.mass = 4.2332635e22;
+    moon3Data.mass = 3.9817e22;
     moon3Data.position = Vector2f(-103e6, 0);
     moon3Data.velocity = Vector2f(0, 1663);
-    moon3Data.radius = 0.6e6;
+    moon3Data.radius = 0.58e6;
     moon3Data.color = Color(171, 173, 109);
     moon3Data.name = "Centurion";
 
     MassiveBodyData moon4Data;
     moon4Data.mass = 8.1337e19;
     moon4Data.radius = 75014;
-    moon4Data.position = Vector2f(-140e6, 0);
-    moon4Data.velocity = Vector2f(-200, 1520);
-    moon4Data.color = Color(128, 128, 0);
+    moon4Data.position = Vector2f(-140e6, 30e6);
+    moon4Data.velocity = Vector2f(0, 1520);
+    moon4Data.color = Color(100, 100, 10);
     moon4Data.name = "Numerus";
 
     bodies.push_back(MassiveBody(gasData));
@@ -106,9 +106,9 @@ void Game::initialize()
     SpacecraftData playerData;
     playerData.maxThrust = 1e3;
     playerData.mass = 20e3;
-    playerData.position = Vector2f(-51.5e6, -89.2e6);
-    playerData.velocity = Vector2f(-1440, 832);
-    spacecraft.push_back(Spacecraft(playerData));
+    playerData.position = Vector2f(-140e6 + 100e3, 30e6);
+    playerData.velocity = Vector2f(0, 1770);
+    //spacecraft.push_back(Spacecraft(playerData));
 }
 
 void Game::update()
@@ -165,9 +165,9 @@ void Game::update()
 
     //std::cout << "UT: " << UT << ", dt: " << dt << ", timeSpeed: " << timeSpeed << ", real time: " << totalTime.asSeconds() << "\n";
     for (int i = 0; i < bodies.size(); i++)
-        bodies[i].update(dt);
+        bodies[i].update(dt, timeSpeed);
     for (int i = 0; i < spacecraft.size(); i++)
-        spacecraft[i].updateCraft(dt);
+        spacecraft[i].updateCraft(dt, timeSpeed);
 
     focusedBody = focusedBody > bodies.size() - 1 ? -1 : focusedBody;
     focusedBody = focusedBody < -1 ? bodies.size() - 1 : focusedBody;
@@ -180,7 +180,7 @@ void Game::update()
 
 void Game::draw()
 {
-    if (Keyboard::isKeyPressed(Keyboard::C))
+    if (!Keyboard::isKeyPressed(Keyboard::C))
         window->clear();
 
     view.setSize(Vector2f(windowWidth, windowHeight));

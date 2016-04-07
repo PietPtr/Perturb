@@ -34,7 +34,7 @@ class Game
         Time totalTime;
         Clock clock;
         int frame = 0;
-        double timeSpeed = 8192;
+        double timeSpeed = 1;
         double UT = 0;        // s
         double dt = 0;        // s
 

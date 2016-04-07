@@ -13,7 +13,9 @@ class PhysicsObject
 {
     public:
         PhysicsObject();
-        void update(double dt);
+        void update(double dt, double timeSpeed);
+        void predict(double timeSpeed);
+        Vector2f calculateAcceleration(Vector2f position, std::vector<MassiveBody>* bodyptr);
         void drawForces(RenderWindow* window);
 
         Vector2f getPosition() { return position; }
@@ -27,6 +29,8 @@ class PhysicsObject
         double rotation = 0;
         std::vector<Vector2f> forces;
         std::string name;
+
+        Vector2f prediction[64];
     private:
 };
 
@@ -65,7 +69,7 @@ class Spacecraft : public PhysicsObject
 {
     public:
         Spacecraft(SpacecraftData data);
-        void updateCraft(double dt);
+        void updateCraft(double dt, double timeSpeed);
         void draw(RenderWindow* window, double zoom);
     protected:
     private:

@@ -10,25 +10,20 @@ PhysicsObject::PhysicsObject()
 
 std::vector<MassiveBody>* PhysicsObject::bodies = nullptr;
 
-void PhysicsObject::update(double dt)
+Vector2f PhysicsObject::calculateAcceleration(Vector2f pos, std::vector<MassiveBody>* bodyptr)
 {
-    // calculate all forces (gravitational, thrust, perhaps even aerobraking later?)
-    // done fres = ma
-    // done apply acceleration on velocity
-    // done apply velocity on position
-
     forces.clear();
 
-    for (int i = 0; i < bodies->size(); i++)
+    for (int i = 0; i < bodyptr->size(); i++)
     {
-        if (name != bodies->at(i).name)
+        if (name != bodyptr->at(i).name)
         {
-            float dx = position.x - bodies->at(i).position.x;
-            float dy = position.y - bodies->at(i).position.y;
+            float dx = pos.x - bodyptr->at(i).position.x;
+            float dy = pos.y - bodyptr->at(i).position.y;
 
             double distance = sqrt(pow(dx, 2) + pow(dy, 2));
 
-            double magnitude = -G * (mass * bodies->at(i).mass) / (pow(distance, 2));
+            double magnitude = -G * (mass * bodyptr->at(i).mass) / (pow(distance, 2));
 
             Vector2f gravitation;
             gravitation.x = (magnitude * dx) / distance;
@@ -53,15 +48,28 @@ void PhysicsObject::update(double dt)
     for (int i = 0; i < forces.size(); i++)
         sumForce += forces[i];
 
-    Vector2f acceleration = Vector2f(sumForce.x / mass, sumForce.y / mass);
+    return Vector2f(sumForce.x / mass, sumForce.y / mass);
+}
+
+
+void PhysicsObject::update(double dt, double timeSpeed)
+{
+    Vector2f acceleration = calculateAcceleration(position, bodies);
     velocity.x += acceleration.x * dt;
     velocity.y += acceleration.y * dt;
     position.x += velocity.x * dt;
     position.y += velocity.y * dt;
 
+    predict(timeSpeed);
+
     //std::cout << "acceleration: " << acceleration.x << " m/s2, velocity: " << velocity.x << " m/s, position: " << position.x << " m\n";
     //std::cout << "acceleration: " << acceleration.y << " m/s2, velocity: " << velocity.y << " m/s, position: " << position.y << " m\n";
     //std::cout << "\n";
+}
+
+void PhysicsObject::predict(double timeSpeed)
+{
+
 }
 
 void PhysicsObject::drawForces(RenderWindow* window)
