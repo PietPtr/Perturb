@@ -25,17 +25,17 @@ class Game
         View view;
         Vector2f viewPos { 0, 0 };
         double zoom = 3e5;
-        int focusedBody = 3;
+        int focusedBody = 0;
         bool focus = true;
 
         int windowWidth = 1280; // px
         int windowHeight = 720; // px
 
-        Time sfmldt;
+        Time realdt;
         Time totalTime;
         Clock clock;
         int frame = 0;
-        double timeSpeed = 1;
+        double timeSpeed = 256;
         double UT = 0;        // s
         double dt = 0;        // s
 

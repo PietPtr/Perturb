@@ -107,9 +107,9 @@ void Game::initialize()
     playerData.maxThrust = 10e3;
     playerData.mass = 20e3;
     playerData.position = Vector2f(-103e6 + 0.67e6, 0);
-    playerData.velocity = Vector2f(0, 3600);
+    playerData.velocity = Vector2f(0, 3650);
     playerData.playerControlled = true;
-    spacecraft.push_back(Spacecraft(playerData));
+    //spacecraft.push_back(Spacecraft(playerData));
 }
 
 void Game::update()
@@ -153,29 +153,32 @@ void Game::update()
             focus = true;
     }
 
-    sfmldt = clock.restart();
-    totalTime += sfmldt;
-    dt = sfmldt.asSeconds() * timeSpeed;
-    UT += dt;
+    realdt = clock.restart();
+    totalTime += realdt;
+    dt = realdt.asSeconds() * timeSpeed;
+    UT += dt * timeSpeed;
 
     float SPEED = 1e8;
     if (Keyboard::isKeyPressed(Keyboard::W))
-        viewPos.y -= SPEED * sfmldt.asSeconds();
+        viewPos.y -= SPEED * realdt.asSeconds();
     if (Keyboard::isKeyPressed(Keyboard::A))
-        viewPos.x -= SPEED * sfmldt.asSeconds();
+        viewPos.x -= SPEED * realdt.asSeconds();
     if (Keyboard::isKeyPressed(Keyboard::S))
-        viewPos.y += SPEED * sfmldt.asSeconds();
+        viewPos.y += SPEED * realdt.asSeconds();
     if (Keyboard::isKeyPressed(Keyboard::D))
-        viewPos.x += SPEED * sfmldt.asSeconds();
+        viewPos.x += SPEED * realdt.asSeconds();
 
-    //std::cout << "UT: " << UT << ", dt: " << dt << ", timeSpeed: " << timeSpeed << ", real time: " << totalTime.asSeconds() << "\n";
+    std::cout << "UT: " << UT << /*", real time: " << totalTime.asSeconds() << ", dt: " << dt << ", timeSpeed: " << timeSpeed <<*/  "\n";
 
     for (int i = 0; i < timeSpeed; i++)
     {
+        double approximatedt = dt;//(i / timeSpeed) * realdt.asSeconds();
+        //std::cout << approximatedt << "\n";
+
         for (int b = 0; b < bodies.size(); b++)
-            bodies[b].update(dt, timeSpeed);
+            bodies[b].update(approximatedt, timeSpeed);
         for (int s = 0; s < spacecraft.size(); s++)
-            spacecraft[s].updateCraft(dt, timeSpeed);
+            spacecraft[s].updateCraft(approximatedt, timeSpeed);
     }
 
     focusedBody = focusedBody > bodies.size() - 1 ? -1 : focusedBody;
@@ -184,14 +187,14 @@ void Game::update()
     if (focusedBody != -1)
         viewPos = bodies[focusedBody].getPosition();
 
-    std::cout << "FPS: " << 1.0 / sfmldt.asSeconds() << ", timeSpeed: " << timeSpeed << "\n";
+    //std::cout << "FPS: " << 1.0 / realdt.asSeconds() << ", var: " <<  << "\n";
 
     frame++;
 }
 
 void Game::draw()
 {
-    if (!Keyboard::isKeyPressed(Keyboard::C))
+    if (Keyboard::isKeyPressed(Keyboard::C))
         window->clear();
 
     view.setSize(Vector2f(windowWidth, windowHeight));
