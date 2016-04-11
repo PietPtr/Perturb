@@ -65,6 +65,28 @@ void PhysicsObject::update(double dt, double timeSpeed)
     //std::cout << "\n";
 }
 
+void PhysicsObject::drawPrediction(bool isSpacecraft, int index, double zoom, RenderWindow* window)
+{
+    for (int i = 0; i < prediction->size(); i++)
+    {
+        Vector2f drawPosition;
+        if (isSpacecraft)
+        {
+            drawPosition = prediction->at(i).spacecraftPositions.at(index);
+
+        }
+        else
+            drawPosition = prediction->at(i).bodyPositions.at(index);
+
+
+        RectangleShape dot;
+        dot.setSize(Vector2f(2*zoom, 2*zoom));
+        dot.setPosition(drawPosition);
+        dot.setFillColor(color);
+        window->draw(dot);
+    }
+}
+
 void PhysicsObject::drawForces(RenderWindow* window)
 {
     for (int i = 0; i < forces.size(); i++)

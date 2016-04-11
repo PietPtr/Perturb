@@ -60,6 +60,7 @@ void Game::initialize()
     gasData.radius = 6e6;
     gasData.color = Color(255, 141, 79);
     gasData.name = "Caesar";
+    gasData.prediction = &prediction;
 
     MassiveBodyData moon1Data;
     moon1Data.mass = 3.1440e21;
@@ -68,6 +69,7 @@ void Game::initialize()
     moon1Data.radius = 0.3e6;
     moon1Data.color = Color(134, 217, 202);
     moon1Data.name = "Tessarius";
+    moon1Data.prediction = &prediction;
 
     MassiveBodyData moon2Data;
     moon2Data.mass = 2.5158e22;
@@ -76,6 +78,7 @@ void Game::initialize()
     moon2Data.radius = 0.42e6;
     moon2Data.color = Color(255, 255, 255);
     moon2Data.name = "Decurion";
+    moon2Data.prediction = &prediction;
 
     MassiveBodyData moon3Data;
     moon3Data.mass = 3.9817e22;
@@ -84,6 +87,7 @@ void Game::initialize()
     moon3Data.radius = 0.58e6;
     moon3Data.color = Color(171, 173, 109);
     moon3Data.name = "Centurion";
+    moon3Data.prediction = &prediction;
 
     MassiveBodyData moon4Data;
     moon4Data.mass = 8.1337e19;
@@ -92,6 +96,7 @@ void Game::initialize()
     moon4Data.velocity = Vector2f(0, 1520);
     moon4Data.color = Color(100, 100, 10);
     moon4Data.name = "Numerus";
+    moon4Data.prediction = &prediction;
 
     bodies.push_back(MassiveBody(gasData));
     bodies.push_back(MassiveBody(moon1Data));
@@ -109,7 +114,10 @@ void Game::initialize()
     playerData.position = Vector2f(-103e6 + 2e6, 0);
     playerData.velocity = Vector2f(0, 2750);
     playerData.playerControlled = true;
+    playerData.prediction = &prediction;
     spacecraft.push_back(Spacecraft(playerData));
+
+    fillPrediction(64);
 }
 
 void Game::update()
@@ -212,11 +220,11 @@ void Game::draw()
 
     for (int i = 0; i < bodies.size(); i++)
     {
-        bodies.at(i).draw(window, zoom);
+        bodies.at(i).draw(window, zoom, i);
     }
     for (int i = 0; i < spacecraft.size(); i++)
     {
-        spacecraft.at(i).draw(window, zoom);
+        spacecraft.at(i).draw(window, zoom, i);
     }
 
     window->display();
@@ -230,7 +238,7 @@ void Game::fillPrediction(int length)
     predictionBodies = bodies;
     predictionSpacecraft = spacecraft;
 
-    double predictiondt = timeSpeed*timeSpeed;
+    double predictiondt = timeSpeed;
 
     for (int i = 0; i < length; i++)
     {

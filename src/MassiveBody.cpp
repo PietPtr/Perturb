@@ -16,7 +16,7 @@ MassiveBody::MassiveBody(MassiveBodyData data)
 }
 
 
-void MassiveBody::draw(RenderWindow* window, double zoom)
+void MassiveBody::draw(RenderWindow* window, double zoom, int index)
 {
     double drawSize = radius / zoom; // draw size in pixels
 
@@ -59,6 +59,6 @@ void MassiveBody::draw(RenderWindow* window, double zoom)
 
     //sstd::cout << SOI.getRadius() << "\n";
 
-
+    drawPrediction(false, index, zoom, window);
     //drawForces(window);
 }

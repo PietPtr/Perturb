@@ -12,18 +12,7 @@ Spacecraft::Spacecraft(SpacecraftData data)
     mass = data.mass;
     playerControlled = data.playerControlled;
     prediction = data.prediction;
-}
-
-void Spacecraft::draw(RenderWindow* window, double zoom)
-{
-    CircleShape body;
-    body.setPosition(position);
-    body.setRadius(zoom);
-    window->draw(body);
-
-    //draw prediction;
-
-    //drawForces(window);
+    color = Color(255, 255, 255);
 }
 
 void Spacecraft::updateCraft(double dt, double timeSpeed)
@@ -46,4 +35,18 @@ void Spacecraft::updateCraft(double dt, double timeSpeed)
     //std::cout << throttle << "\n";
 
     update(dt, timeSpeed);
+}
+
+void Spacecraft::draw(RenderWindow* window, double zoom, int index)
+{
+    CircleShape body;
+    body.setPosition(position);
+    body.setRadius(zoom);
+    window->draw(body);
+
+    //draw prediction;
+
+    drawPrediction(true, index, zoom, window);
+
+    //drawForces(window);
 }

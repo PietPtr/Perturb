@@ -23,6 +23,7 @@ class PhysicsObject
         void update(double dt, double timeSpeed);
         Vector2f calculateAcceleration(Vector2f position, std::vector<MassiveBody>* bodyptr);
         void drawForces(RenderWindow* window);
+        void drawPrediction(bool isSpacecraft, int index, double zoom, RenderWindow* window);
 
         Vector2f getPosition() { return position; }
 
@@ -36,6 +37,7 @@ class PhysicsObject
         std::vector<Vector2f> forces;
         std::vector<SpaceState>* prediction;
         std::string name;
+        Color color;
     private:
 };
 
@@ -54,12 +56,11 @@ class MassiveBody : public PhysicsObject // Moons and the main gas giant.
 {
     public:
         MassiveBody(MassiveBodyData data);
-        void draw(RenderWindow* window, double zoom);
+        void draw(RenderWindow* window, double zoom, int index);
         std::string getName() { return name; }
     protected:
     private:
         int radius;
-        Color color;
 };
 
 struct SpacecraftData
@@ -78,7 +79,7 @@ class Spacecraft : public PhysicsObject
     public:
         Spacecraft(SpacecraftData data);
         void updateCraft(double dt, double timeSpeed);
-        void draw(RenderWindow* window, double zoom);
+        void draw(RenderWindow* window, double zoom, int index);
     protected:
     private:
         double throttle = 0;
