@@ -11,6 +11,7 @@ Spacecraft::Spacecraft(SpacecraftData data)
     velocity = data.velocity;
     mass = data.mass;
     playerControlled = data.playerControlled;
+    prediction = data.prediction;
 }
 
 void Spacecraft::draw(RenderWindow* window, double zoom)
@@ -19,6 +20,8 @@ void Spacecraft::draw(RenderWindow* window, double zoom)
     body.setPosition(position);
     body.setRadius(zoom);
     window->draw(body);
+
+    //draw prediction;
 
     //drawForces(window);
 }

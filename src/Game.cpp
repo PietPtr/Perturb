@@ -54,7 +54,7 @@ void Game::initialize()
     moon4Data.name = "Callisto";*/
 
     MassiveBodyData gasData;
-    gasData.mass = 4.2332635e24;
+    gasData.mass = 4.2491e24;
     gasData.position = Vector2f(0, 0);
     gasData.velocity = Vector2f(0, 0);
     gasData.radius = 6e6;
@@ -62,7 +62,7 @@ void Game::initialize()
     gasData.name = "Caesar";
 
     MassiveBodyData moon1Data;
-    moon1Data.mass = 3.1088028e21;
+    moon1Data.mass = 3.1440e21;
     moon1Data.position = Vector2f(-30e6, 0);
     moon1Data.velocity = Vector2f(0, 3082);
     moon1Data.radius = 0.3e6;
@@ -106,10 +106,10 @@ void Game::initialize()
     SpacecraftData playerData;
     playerData.maxThrust = 10e3;
     playerData.mass = 20e3;
-    playerData.position = Vector2f(-103e6 + 0.67e6, 0);
-    playerData.velocity = Vector2f(0, 3650);
+    playerData.position = Vector2f(-103e6 + 2e6, 0);
+    playerData.velocity = Vector2f(0, 2750);
     playerData.playerControlled = true;
-    //spacecraft.push_back(Spacecraft(playerData));
+    spacecraft.push_back(Spacecraft(playerData));
 }
 
 void Game::update()
@@ -148,9 +148,14 @@ void Game::update()
                 zoom*=2;
         }
         if (event.type == sf::Event::LostFocus)
-            focus == false;
+            focus = false;
         if (event.type == sf::Event::GainedFocus)
             focus = true;
+        if (event.type == Event::Resized)
+        {
+            windowWidth = event.size.width;
+            windowHeight = event.size.height;
+        }
     }
 
     realdt = clock.restart();
@@ -159,16 +164,19 @@ void Game::update()
     UT += dt * timeSpeed;
 
     float SPEED = 1e8;
-    if (Keyboard::isKeyPressed(Keyboard::W))
-        viewPos.y -= SPEED * realdt.asSeconds();
-    if (Keyboard::isKeyPressed(Keyboard::A))
-        viewPos.x -= SPEED * realdt.asSeconds();
-    if (Keyboard::isKeyPressed(Keyboard::S))
-        viewPos.y += SPEED * realdt.asSeconds();
-    if (Keyboard::isKeyPressed(Keyboard::D))
-        viewPos.x += SPEED * realdt.asSeconds();
+    if (focus)
+    {
+        if (Keyboard::isKeyPressed(Keyboard::W))
+            viewPos.y -= SPEED * realdt.asSeconds();
+        if (Keyboard::isKeyPressed(Keyboard::A))
+            viewPos.x -= SPEED * realdt.asSeconds();
+        if (Keyboard::isKeyPressed(Keyboard::S))
+            viewPos.y += SPEED * realdt.asSeconds();
+        if (Keyboard::isKeyPressed(Keyboard::D))
+            viewPos.x += SPEED * realdt.asSeconds();
+    }
 
-    std::cout << "UT: " << UT << /*", real time: " << totalTime.asSeconds() << ", dt: " << dt << ", timeSpeed: " << timeSpeed <<*/  "\n";
+    //std::cout << "UT: " << UT << /*", real time: " << totalTime.asSeconds() << ", dt: " << dt << ", timeSpeed: " << timeSpeed <<*/  "\n";
 
     for (int i = 0; i < timeSpeed; i++)
     {
@@ -194,7 +202,7 @@ void Game::update()
 
 void Game::draw()
 {
-    if (Keyboard::isKeyPressed(Keyboard::C))
+    if (!(Keyboard::isKeyPressed(Keyboard::C) && focus))
         window->clear();
 
     view.setSize(Vector2f(windowWidth, windowHeight));
@@ -212,6 +220,38 @@ void Game::draw()
     }
 
     window->display();
+}
+
+void Game::fillPrediction(int length)
+{
+    predictionBodies.clear();
+    predictionSpacecraft.clear();
+
+    predictionBodies = bodies;
+    predictionSpacecraft = spacecraft;
+
+    double predictiondt = timeSpeed*timeSpeed;
+
+    for (int i = 0; i < length; i++)
+    {
+        std::vector<Vector2f> bodyPositions;
+        std::vector<Vector2f> spacecraftPositions;
+        for (int b = 0; b < predictionBodies.size(); b++)
+        {
+            predictionBodies[b].update(predictiondt, timeSpeed);
+            bodyPositions.push_back(predictionBodies.at(b).getPosition());
+        }
+        for (int s = 0; s < spacecraft.size(); s++)
+        {
+            predictionSpacecraft[s].updateCraft(predictiondt, timeSpeed);
+            spacecraftPositions.push_back(predictionSpacecraft.at(s).getPosition());
+        }
+        SpaceState state;
+        state.bodyPositions = bodyPositions;
+        state.spacecraftPositions = spacecraftPositions;
+        state.UT = UT + i * predictiondt;
+        prediction.push_back(state);
+    }
 }
 
 bool Game::isWindowOpen()

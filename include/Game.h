@@ -14,6 +14,8 @@ class Game
         void draw();
         bool isWindowOpen();
 
+        void fillPrediction(int length);
+
         void loadAudio(std::vector<std::string> fileNames);
         void loadTextures(std::vector<std::string> fileNames);
 
@@ -35,9 +37,9 @@ class Game
         Time totalTime;
         Clock clock;
         int frame = 0;
-        double timeSpeed = 256;
-        double UT = 0;        // s
-        double dt = 0;        // s
+        double timeSpeed = 1;
+        long double UT = 0;      // s
+        double dt = 0;           // s
 
         std::vector<std::string> audioFileNames { };
         std::vector<std::string> textureFileNames { };
@@ -47,4 +49,10 @@ class Game
 
         std::vector<MassiveBody> bodies;
         std::vector<Spacecraft> spacecraft;
+
+        std::vector<SpaceState> prediction;
+        std::vector<MassiveBody> predictionBodies;
+        std::vector<Spacecraft> predictionSpacecraft;
+
+
 };

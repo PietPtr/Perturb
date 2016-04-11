@@ -12,7 +12,9 @@ MassiveBody::MassiveBody(MassiveBodyData data)
     radius = data.radius;
     name = data.name;
     color = data.color;
+    prediction = data.prediction;
 }
+
 
 void MassiveBody::draw(RenderWindow* window, double zoom)
 {
@@ -52,7 +54,7 @@ void MassiveBody::draw(RenderWindow* window, double zoom)
     SOI.setOutlineColor(Color(color.r, color.g, color.b, 20));
     SOI.setOutlineThickness(zoom);
     SOI.setFillColor(Color(0, 0, 0, 0));
-    if (Keyboard::isKeyPressed(Keyboard::S))
+    if (Keyboard::isKeyPressed(Keyboard::F8))
         window->draw(SOI);
 
     //sstd::cout << SOI.getRadius() << "\n";

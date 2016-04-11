@@ -2,8 +2,6 @@
 #include "Game.h"
 #include <iostream>
 
-
-
 using namespace sf;
 int main()
 {
@@ -26,5 +24,3 @@ int main()
 
     return 0;
 }
-
-

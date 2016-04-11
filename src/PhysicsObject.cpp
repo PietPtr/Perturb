@@ -60,16 +60,9 @@ void PhysicsObject::update(double dt, double timeSpeed)
     position.x += velocity.x * dt;
     position.y += velocity.y * dt;
 
-    predict(timeSpeed);
-
     //std::cout << "acceleration: " << acceleration.x << " m/s2, velocity: " << velocity.x << " m/s, position: " << position.x << " m\n";
     //std::cout << "acceleration: " << acceleration.y << " m/s2, velocity: " << velocity.y << " m/s, position: " << position.y << " m\n";
     //std::cout << "\n";
-}
-
-void PhysicsObject::predict(double timeSpeed)
-{
-
 }
 
 void PhysicsObject::drawForces(RenderWindow* window)

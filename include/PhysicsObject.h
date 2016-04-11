@@ -9,12 +9,18 @@ const double G = 6.67408e-11;
 
 class MassiveBody;
 
+struct SpaceState
+{
+    std::vector<Vector2f> bodyPositions;
+    std::vector<Vector2f> spacecraftPositions;
+    long double UT;
+};
+
 class PhysicsObject
 {
     public:
         PhysicsObject();
         void update(double dt, double timeSpeed);
-        void predict(double timeSpeed);
         Vector2f calculateAcceleration(Vector2f position, std::vector<MassiveBody>* bodyptr);
         void drawForces(RenderWindow* window);
 
@@ -28,9 +34,8 @@ class PhysicsObject
         double mass;       // kg
         double rotation = 0;
         std::vector<Vector2f> forces;
+        std::vector<SpaceState>* prediction;
         std::string name;
-
-        Vector2f prediction[64];
     private:
 };
 
@@ -42,6 +47,7 @@ struct MassiveBodyData
     Vector2f velocity;
     std::string name;
     Color color;
+    std::vector<SpaceState>* prediction;
 };
 
 class MassiveBody : public PhysicsObject // Moons and the main gas giant.
@@ -64,6 +70,7 @@ struct SpacecraftData
     double mass = 20e3; // dry mass
     double fuel = 20e3;
     bool playerControlled = false;
+    std::vector<SpaceState>* prediction;
 };
 
 class Spacecraft : public PhysicsObject
